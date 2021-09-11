@@ -1,0 +1,85 @@
+{% extends 'maincontent.html' %}
+
+{% block  content %}
+<h1>Libros</h1>
+<table  class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Fecha de creacion</th>
+                <th scope="col">Fecha de actualizacion</th>
+                <th scope="col">Accion</th>
+            </tr>
+        </thead>
+        {% for libro in lista_libros %}
+        <tbody>
+            <tr>
+                <th scope="row">{{libro.id}}</th>
+                <td>{{libro.titulo}}</td>
+                <td>{{libro.created_at}}</td>
+                <td>{{libro.updated_at}}</td>
+                <td>
+                    <form method="POST" action="getB">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ libro.id }}">
+                        <button class="btn btn-primary my-1" type="submit">Editar</button>
+                    </form>
+                    <form method="POST" action="delB">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ libro.id }}">
+                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <form action='createB' method='POST'>
+                {% csrf_token %}
+                <p>Titulo: <input type="text" name="titulo" required=""></p>
+                <input class="btn btn-primary my-1" type="submit" value="Añadir">
+        </form>
+    </table>
+<h1>Publicadores</h1>
+<table  class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Libros</th>
+                <th scope="col">fecha de creacion</th>
+                <th scope="col">Fecha de actualizacion</th>
+                <th scope="col">Accion</th>
+            </tr>
+        </thead>
+        {% for publicador in lista_publicadores%}
+        <tbody>
+            <tr>
+                <th scope="row">{{publicador.id}}</th>
+                <td>{{publicador.nombre}}</td>
+                <td>
+                    {% for libro in publicador.libros.all %}
+                        {{libro.titulo}} -
+                    {% endfor %}
+                </td>
+                <td>{{publicador.created_at}}</td>
+                <td>{{publicador.updated_at}}</td>
+                <td>
+                    <form method="POST" action="getP">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ publicador.id }}">
+                        <button class="btn btn-primary my-1" type="submit">Editar</button>
+                    </form>
+                    <form method="POST" action="delP">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ publicador.id }}">
+                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        <a href="addP" type="BUTTON" class="btn btn-primary my-1">Agregar</a>
+        </tbody>
+    </table>
+{% endblock %}

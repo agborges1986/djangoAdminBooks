@@ -1,0 +1,25 @@
+{% extends 'maincontent.html' %}
+
+{% block content %}
+    <h1>Sitios</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre de sitio</th>
+                <th scope="col">Creado en</th>
+                <th scope="col">Cliente</th>
+            </tr>
+        </thead>
+        {% for sitio in lista_sitios %}
+        <tbody>
+            <tr>
+                <th scope="row">{{sitio.id}}</th>
+                <td>{{sitio.domain_name}}</td>
+                <td>{{sitio.created_datetime}}</td>
+                <td>{{sitio.client}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{%endblock %}

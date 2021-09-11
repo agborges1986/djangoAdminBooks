@@ -1,0 +1,24 @@
+{% extends 'maincontent.html' %}
+
+{% block  content %}
+<h1>Editar Publicador</h1>
+    <form class="form-group" method="POST" action="updP">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ publicador.id }}">
+        <label for="nombre">Nombre: </table>
+        <input type="text" name="nombre" value="{{ publicador.nombre }}"><br>
+        <label for="libros">Libros: </table><br>
+            <select multiple class="form-control" name="libros" required multiple>
+            {% comment %} select devuelve la lista de options.value seleccionados {% endcomment %}
+                {% for libro in lista_libros %}
+                    {% if libro in publicador.libros.all %}
+                        <option value="{{ libro.id }}" selected>{{ libro.titulo }}</option>
+                    {% else %}
+                        <option value="{{ libro.id }}">{{ libro.titulo }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select><br><br>
+        <input type="submit" value="Actualizar datos">
+    </form><br>
+    <a href="libros_publicadores" role="button">Volver</a>
+{% endblock %}

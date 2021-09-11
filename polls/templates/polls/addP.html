@@ -1,0 +1,17 @@
+{% extends 'maincontent.html' %}
+
+{% block  content %}
+    <h1>Añadir Pulicador</h1>
+    <form action='createP' method='POST'>
+                {% csrf_token %}
+                <p>Nombre: <input type="text" name="nombre" required></p>
+                <p>Libros: <br>
+                    <select name="libros" required multiple>
+                        {% for libro in lista_libros %}
+                            <option value="{{ libro.id }}">{{ libro.titulo }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <input type="submit" value="Añadir">
+        </form>
+{% endblock %}
